@@ -1,8 +1,8 @@
 from tensorflow.keras.models import load_model
 import cv2, os, json, hcaptcha
 import numpy as np
-model = load_model('data.h5')
-config =  json.load(open('./config.json'))
+model = load_model('api.h5')
+config =  json.load(open('./d1mod_config.json'))
 
 exploit = hcaptcha.Challenge(
     site_key="4c672d35-0701-42b2-88c3-78380b0db560",
