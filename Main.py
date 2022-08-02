@@ -3,17 +3,18 @@ import cv2, os, json, hcaptcha
 import numpy as np
 model = load_model('data.h5')
 config =  json.load(open('./config.json'))
-ch = hcaptcha.Challenge(
+
+exploit = hcaptcha.Challenge(
     site_key="4c672d35-0701-42b2-88c3-78380b0db560",
     site_url="https://discord.com",
     timeout=10
 )
-if ch.token:
-    print(ch.token)
+if exploit.token:
+    print(exploit.token)
     exit()
 os.system('cls')
 print(ch.question["en"])
-for tile in ch:
+for tile in exploit:
     image = tile.get_image(raw=True)
     img = cv2.imdecode(np.fromstring(image, np.uint8), cv2.IMREAD_COLOR)
     img = cv2.resize(img,(config['image_size'],config['image_size']))
@@ -36,12 +37,12 @@ for tile in ch:
     if res == 7:
         img_type = 'truck'
     if img_type in ch.question["en"]:
-        print(f'YES', img_type)
+        print(f' - VuLN', img_type)
         ch.answer(tile)
     else:
-        print('NO')
+        print(' - InValid')
 try:
-    token = ch.submit()
+    d1mod_token = exploit.submit()
     print(d1mod_token)
 except hcaptcha.ChallengeError as err:
     print(err)
